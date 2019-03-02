@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <style type='text/css'>
+        /* @formatter:off */
+        html, body { width: 100vw; height: 100vh; margin: 0; padding: 0; font-family: sans-serif; }
+        body { display: grid; grid-template-rows: auto 1fr auto; }
+        header, footer { padding: 2px 10px; background-color: silver; }
+        main { display: grid; grid-template-rows: auto 1fr; grid-template-columns: auto; justify-content: center; }
+        section { display: grid; grid-template-rows: 20px auto; padding: 10px 0; align-items: stretch; }
+        button { font-weight: bold; border-radius: 10px; }
+        h1 { font-size: .8em; color: darkgray; margin: 0; }
+        .btnGroup { display: grid; grid-template-columns: repeat(auto-fill, 96px); grid-gap: 15px; min-width: 318px; justify-content: center; align-content: center; }
+        .btnMode { width: 96px; height: 58px; background-position: center; background-repeat: no-repeat; background-size: contain; }
+        #btnAction { font-size: 2em; background-position: center; background-repeat: no-repeat; }
+
+        @media (orientation: landscape) {
+            main { grid-template-columns: auto 1fr; grid-template-rows: auto; align-content: center; }
+            section { padding: 0 10px; }
+        }
+        /* @formatter:on */
+    </style>
+    <title>Yi Multi Remote</title>
+</head>
+<body>
+<header>Yi Multi Remote</header>
+<main>
+    <section>
+        <h1>Mode</h1>
+        <div class="btnGroup">
+            <button class="btnMode" value="pPhoto"></button>
+            <button class="btnMode" value="pTimer"></button>
+            <button class="btnMode" value="pBurst"></button>
+            <button class="btnMode" value="pTimeLapse"></button>
+            <button class="btnMode" value="vVideo"></button>
+            <button class="btnMode" value="vTimeLapse"></button>
+            <button class="btnMode" value="vSlowMotion"></button>
+            <button class="btnMode" value="vLoop"></button>
+            <button class="btnMode" value="vPlusPhoto"></button>
+        </div>
+    </section>
+    <section>
+        <h1>Action</h1>
+        <button id="btnAction">Action</button>
+    </section>
+</main>
+<footer>V1.0</footer>
+
+<script type="text/javascript">
+
+    const mode = {
+        pPhoto: {type: "capture_mode", param: "precise quality", bgImage: "mod_but_pht_nor"},
+        pTimer: {type: "capture_mode", param: "precise self quality", bgImage: "mod_but_tim_nor"},
+        pBurst: {type: "capture_mode", param: "burst quality", bgImage: "mod_but_bur_nor"},
+        pTimeLapse: {type: "capture_mode", param: "precise quality cont.", bgImage: "mod_but_tlp_nor"},
+
+        vVideo: {type: "rec_mode", param: "record", bgImage: "mod_but_vid_nor"},
+        vTimeLapse: {type: "rec_mode", param: "record_timelapse", bgImage: "mod_but_tlv_nor"},
+        vSlowMotion: {type: "rec_mode", param: "record_slow_motion", bgImage: "mod_but_slow_nor"},
+        vLoop: {type: "rec_mode", param: "record_loop", bgImage: "mod_but_lop_nor"},
+        vPlusPhoto: {type: "rec_mode", param: "record_photo", bgImage: "mod_but_vp_nor"}
+    };
+
+    let btnAction = $("btnAction");
+
+    /**
+     * Handle mode buttons
+     */
+
+    let lstBtnMode = $$("btnMode");
+
+    for (let i = 0; i < lstBtnMode.length; i++) {
+        let el = lstBtnMode[i];
+
+        //  Set click handler
+        el.addEventListener('click', function (e) {
+            e.target.blur();
+
+            let selMode = e.target.value;
+            espGet("/mode?type=" + mode[selMode].type + "&param=" + mode[selMode].param);
+            btnAction.innerHTML = "&nbsp;";
+            btnAction.style.backgroundImage = "url('" + mode[selMode].bgImage + ".png')";
+        }, false);
+
+        // Set background image
+        //setTimeout(function () {
+        el.style.backgroundImage = "url('" + mode[el.value].bgImage + ".png')";
+        //}, 200 * i);
+    }
+
+
+    /**
+     * Handle action button
+     */
+
+    btnAction
+        .addEventListener("click", function () {
+            espGet("/action");
+        });
+
+
+    /**
+     * Helpers
+     */
+
+    function $(id) {
+        return document.getElementById(id);
+    }
+
+    function $$(className) {
+        return document.getElementsByClassName(className);
+    }
+
+    function espGet(ressource) {
+        let xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                /*
+                let resp = JSON.parse(xhr.responseText);
+                document.getElementById("status").innerHTML = resp.status ==
+                "OK" ?
+                    "Mémoire disponible : " + resp.heap :
+                    "Erreur";
+                */
+            }
+        };
+        xhr.open("GET", ressource, true);
+        xhr.send();
+    }
+
+</script>
+</body>
+</html>
