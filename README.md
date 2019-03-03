@@ -7,7 +7,7 @@ I suspect the auto shutter mode to be the culprit of missync but didn't tried wi
 as I'm not too much interested in still pictures (at least using these cameras).
 
 ![Anim](./doc/anim.gif)\
-*People running after a ball make acceptable sync tests.*
+*People running after a ball make good sync test.*
 
 ## Prerequisites
 
@@ -34,6 +34,7 @@ For the right camera SD card, your file should look like this:
 - ESP8266 - Wemos D1 module
 - Momentary switch
 - LED
+- 68 ohms resistor (actual value depends on the LED model)
 - Buzzer
 
 ### Wiring
@@ -44,6 +45,9 @@ I found this [Hama foldable flash bracket](https://www.hama.com/00006831) quite 
 when coupled with a lipstick-sized battery pack.\
 ![Enclosure](./doc/enclosure.jpg)
 ![Enclosure details](./doc/enclosure_details.jpg)
+
+## Software
+Multi Yi cameras remote was tested with version 2.4.2 of the Arduino libraries for ESP8266.\
 
 ### External libraries
 - https://github.com/bblanchon/ArduinoJson
@@ -68,7 +72,6 @@ be switched off and above sequence restarted from the beginning.
 As an alternative to the button, you can connect your smartphone to the AP and use the web interface.
 
 ![Web ui](./doc/webui.jpg)
-
 
 ### Useful links
 - https://dashcamtalk.com/forum/forums/yi-4k-action-camera.224
