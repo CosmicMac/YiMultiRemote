@@ -41,12 +41,19 @@
 #define DEFAULT_PHOTO_MODE  "precise quality"
 
 /**
- * DNS server
+ * DNS SERVER
  */
 #define DNS_PORT            53
 
 /**
- * Yi messages IDs
+ * BEEP ON VIDEO
+ * Beep a few seconds after video start, and a few secondes before video stop
+ * May be helpful to control and adjust sync between left and right camera
+ */
+#define BEEP_ON_VIDEO       true
+
+/**
+ * YI MESSAGES IDS
  */
 #define YI_MSG_CAPTURE_PHOTO   769
 #define YI_MSG_START_VIDEO_REC 513

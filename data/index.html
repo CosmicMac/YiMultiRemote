@@ -83,10 +83,10 @@
             btnAction.style.backgroundImage = "url('" + mode[selMode].bgImage + ".png')";
         }, false);
 
-        // Set background image
-        //setTimeout(function () {
-        el.style.backgroundImage = "url('" + mode[el.value].bgImage + ".png')";
-        //}, 200 * i);
+        // Set background image (with delay to avoid hammering the server)
+        setTimeout(function () {
+            el.style.backgroundImage = "url('" + mode[el.value].bgImage + ".png')";
+        }, 200 * i);
     }
 
 

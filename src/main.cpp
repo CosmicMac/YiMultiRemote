@@ -1,7 +1,7 @@
 /**
  * Yi Multi Remote
  * 
- * Triggers 2 Yi action cameras in sync (for poor man's VR rig)
+ * Trigger a couple of YI 4K+ Action Camera
  */
 
 #include <Arduino.h>
@@ -259,11 +259,13 @@ void capturePhoto() {
 void toggleVideo() {
     if (videoRec) {
 
-        // First, beep...
-        tone(BUZZER_PIN, BUZZER_FREQUENCY, BUZZER_DURATION);
-        unsigned long m = millis();
-        while (millis() - m < 1000) {
-            yield();
+        if (BEEP_ON_VIDEO) {
+            // First, beep...
+            tone(BUZZER_PIN, BUZZER_FREQUENCY, BUZZER_DURATION);
+            unsigned long m = millis();
+            while (millis() - m < 1000) {
+                yield();
+            }
         }
 
         // ...then stop video
@@ -274,13 +276,15 @@ void toggleVideo() {
         // First, start video...
         fireYiMessage(YI_MSG_START_VIDEO_REC);
 
-        // ...then beep
-        unsigned long m = millis();
-        while (millis() - m < 2000) {
-            yield();
+        if (BEEP_ON_VIDEO) {
+            // ...then beep
+            unsigned long m = millis();
+            while (millis() - m < 2000) {
+                yield();
+            }
+            tone(BUZZER_PIN, BUZZER_FREQUENCY, BUZZER_DURATION);
         }
-        tone(BUZZER_PIN, BUZZER_FREQUENCY, BUZZER_DURATION);
-
+        
     }
     videoRec = !videoRec;
 }
