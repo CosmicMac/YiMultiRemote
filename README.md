@@ -47,7 +47,7 @@ when coupled with a lipstick-sized battery pack.\
 ![Enclosure details](./doc/enclosure_details.jpg)
 
 ## Software
-Multi Yi cameras remote was tested with version 2.4.2 of the Arduino libraries for ESP8266.\
+Multi Yi cameras remote was tested with version 2.4.2 of the Arduino libraries for ESP8266.
 
 ### External libraries
 - https://github.com/bblanchon/ArduinoJson
